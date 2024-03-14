@@ -17,3 +17,16 @@ Feature: API
       |men's clothing|
       |women's clothing|
 
+  Scenario: Requesting the API should return correct status code
+    When sending request to get products
+    Then the response status code should be 200
+
+  Scenario: Requested products amount should be equal to 20
+    When sending request to get products
+    Then number of products are 20
+
+
+
+
+
+

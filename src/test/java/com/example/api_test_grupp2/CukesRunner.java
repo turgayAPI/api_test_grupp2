@@ -11,7 +11,7 @@ import org.junit.runner.RunWith;
                 "html:target/cucumber-reports.html",
                 "pretty"
         },
-        features = "src/test/java/com/resources/features"
+        features = "src/test/java/com/example/api_test_grupp2/resources/features"
 
 
 )

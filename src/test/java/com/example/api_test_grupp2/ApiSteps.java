@@ -7,17 +7,14 @@ import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.junit.Assert;
-
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
 
 public class ApiSteps {
 
@@ -121,8 +118,3 @@ public class ApiSteps {
         response.then().assertThat().statusCode(int1);
     }
 }
-
-
-
-
-

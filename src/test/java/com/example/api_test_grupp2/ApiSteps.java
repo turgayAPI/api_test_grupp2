@@ -84,10 +84,42 @@ public class ApiSteps {
         Assert.assertEquals("Number of products does not match", int1.intValue(), actualSize);
     }
 
+    @When("sending request to get products") // Jaime
+    public void sending_a_request_to_get_products() {
+        response = given().baseUri("https://produktapi-6ef53ba8f2f2.herokuapp.com/products").when().get();
 
+    }
+    @Then("the response status code should be {int}") // Jaime
+    public void the_response_status_code_should_be(Integer expectedStatusCode) {
+        int actualStatusCode = response.getStatusCode();
+         assertEquals(expectedStatusCode, actualStatusCode);
+    }
 
+    @Then("number of products are {int}") // Jaime
+    public void number_of_products_are(Integer expectedNumberOfProducts) {
+        List<String> actualProductsTitles = response.jsonPath().get();
+        int actualNumberOfProducts = actualProductsTitles.size();
 
-
+        assertEquals(expectedNumberOfProducts, actualNumberOfProducts);
+    }
+    @When("the user requests the product with ID {string}") // Salim
+    public void the_user_requests_the_product_with_id(String id) {
+        String baseUri = "https://produktapi-6ef53ba8f2f2.herokuapp.com";
+        response = given()
+                .baseUri(baseUri)
+                .when()
+                .get("/products/{id}", id);
+    }
+    @Then("the response should contain the product details for ID {string}") // Salim
+    public void the_response_should_contain_the_product_details_for_id(String id) {
+        response.then().statusCode(200);
+        String responseBody = response.getBody().asString();
+        assertThat(responseBody, containsString("\"id\":" + id));
+    }
+    @Then("the response code should be {int}") // Salim
+    public void the_response_code_should_be(Integer int1) {
+        response.then().assertThat().statusCode(int1);
+    }
 }
 
 

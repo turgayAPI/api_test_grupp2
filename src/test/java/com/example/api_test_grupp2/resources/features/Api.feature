@@ -17,3 +17,25 @@ Feature: API
       |men's clothing|
       |women's clothing|
 
+
+  Scenario: Turgay- Retrieve products by category
+    When  sending a get request products for the "men's clothing" category
+    Then the response should contain products related to "men's clothing"
+    And the response status should be 200 OK
+
+
+  Scenario: Turgay-User requests products from the Electronics category
+    When sending a get request products for the "electronics" category
+    Then the response status should be 200 OK
+    And the number of products in the response should be 6
+
+
+  Scenario: Turgay-User requests products from the Womens clothing category
+    When sending a get request products for the "women's clothing" category
+    Then the response status should be 200 OK
+    And the number of products in the response should be 6
+
+  Scenario:Turgay- User requests products from the Jewelery category
+    When sending a get request products for the "jewelery" category
+    Then the response status should be 200 OK
+    And the number of products in the response should be 4

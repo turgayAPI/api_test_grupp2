@@ -1,12 +1,21 @@
 package com.example.api_test_grupp2;
 
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.restassured.RestAssured;
+import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
+import org.junit.Assert;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
@@ -41,4 +50,47 @@ public class ApiSteps {
         assertEquals(expectedCategoriesTitles, actualCategoriesTitles);
     }
 
+    @When("sending a get request products for the {string} category")//Turgay
+    public void sending_a_get_request_products_for_the_category(String category) {
+        String baseURI = "https://produktapi-6ef53ba8f2f2.herokuapp.com";
+        response = given()
+                .pathParam("category", category)
+                .when()
+                .get(baseURI + "/products/categories/{category}");
+    }
+
+    @Then("the response should contain products related to {string}") //Turgay
+    public void the_response_should_contain_products_related_to(String category) {
+        assertThat(response, notNullValue());
+        response.then().body("category", everyItem(equalTo(category)));
+    }
+    @Then("the response status should be {int} OK") //Turgay
+    public void the_response_status_should_be_ok(Integer statusCode) {
+        assertThat(response.statusCode(), equalTo(statusCode));
+    }
+
+    @Then("the response should contain the following products in category") //Turgay
+
+    public void the_response_should_contain(List<String> expectedCategoriesTitles) {
+        List<String> actualCategoriesTitles = response.jsonPath().get();
+
+        assertEquals(expectedCategoriesTitles, actualCategoriesTitles);
+    }
+
+    @Then("the number of products in the response should be {int}") //Turgay
+    public void the_number_of_products_in_the_response_should_be(Integer int1) {
+
+        int actualSize = JsonPath.from(response.asString()).getList("$").size();
+        Assert.assertEquals("Number of products does not match", int1.intValue(), actualSize);
+    }
+
+
+
+
+
 }
+
+
+
+
+

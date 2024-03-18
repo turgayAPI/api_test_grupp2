@@ -102,11 +102,24 @@ public class ApiSteps {
 
         assertEquals(expectedNumberOfProducts, actualNumberOfProducts);
     }
-
-
-
-
-
+    @When("the user requests the product with ID {string}") // Salim
+    public void the_user_requests_the_product_with_id(String id) {
+        String baseUri = "https://produktapi-6ef53ba8f2f2.herokuapp.com";
+        response = given()
+                .baseUri(baseUri)
+                .when()
+                .get("/products/{id}", id);
+    }
+    @Then("the response should contain the product details for ID {string}") // Salim
+    public void the_response_should_contain_the_product_details_for_id(String id) {
+        response.then().statusCode(200);
+        String responseBody = response.getBody().asString();
+        assertThat(responseBody, containsString("\"id\":" + id));
+    }
+    @Then("the response code should be {int}") // Salim
+    public void the_response_code_should_be(Integer int1) {
+        response.then().assertThat().statusCode(int1);
+    }
 }
 
 

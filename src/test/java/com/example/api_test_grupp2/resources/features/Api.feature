@@ -48,3 +48,12 @@ Feature: API
   Scenario: Requested products amount should be equal to 20 # Jaime
     When sending request to get products
     Then number of products are 20
+
+  Scenario: User requests a product by a valid ID //Salim
+    When the user requests the product with ID '1'
+    Then the response status should be 200 OK
+    And the response should contain the product details for ID '1'
+
+  Scenario: User requests a product by a non-existing ID //Salim
+    When the user requests the product with ID '9999'
+    Then the response code should be 403

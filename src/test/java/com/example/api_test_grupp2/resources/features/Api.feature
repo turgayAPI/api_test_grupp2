@@ -56,4 +56,4 @@ Feature: API
 
   Scenario: User requests a product by a non-existing ID //Salim
     When the user requests the product with ID '9999'
-    Then the response code should be 403
+    Then the response code should be 404
